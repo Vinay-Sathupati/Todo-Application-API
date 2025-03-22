@@ -253,9 +253,10 @@ app.get(
 //API 4:
 app.post('/todos/', checkPossibleBodyValue, async (request, response) => {
   const {id, todo, category, priority, status, dueDate} = request.body
+  const formatedDueDate = format(new Date(dueDate), 'yyyy-MM-dd')
   const postTodosQuery = `
   INSERT INTO todo (id, todo, priority, status, category, due_date)
-  VALUES (${id}, '${todo}', '${priority}', '${status}', '${category}', '${dueDate}');`
+  VALUES (${id}, '${todo}', '${priority}', '${status}', '${category}', '${formatedDueDate}');`
   const postResponse = await db.run(postTodosQuery)
   response.send('Todo Successfully Added')
   console.log({id: postResponse.lastID})
